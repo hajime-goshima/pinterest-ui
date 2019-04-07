@@ -9,13 +9,18 @@
       </h2>
       <div class="arrow"></div>
     </div>
-    <div class="item-list">
-      <div v-for="item in items" :key="item.id" class="item">
+    <nuxt-link
+      v-for="item in items"
+      :key="item.id"
+      class="item-list"
+      :to="`/${item.id}`"
+    >
+      <div class="item">
         <h3>{{ item.title }}</h3>
         <p>{{ item.body }}</p>
       </div>
-      <button class="readmore" @click="readMore">もっと読み込む</button>
-    </div>
+    </nuxt-link>
+    <button class="readmore" @click="readMore">もっと読み込む</button>
   </section>
 </template>
 
@@ -86,6 +91,9 @@ export default {
   transform: rotate(45deg);
 }
 
+.item-list {
+  text-decoration: none;
+}
 .item-list .item {
   border: 1px solid #ddd;
   padding: 50px;
