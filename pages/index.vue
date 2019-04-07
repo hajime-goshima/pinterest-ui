@@ -32,8 +32,9 @@ export default {
   },
   methods: {
     readMore() {
+      const length = this.items.length
       for (let i = 1; i <= 3; i++) {
-        const id = this.items.length + i
+        const id = length + i
         this.items.push({ id: id, title: `Title${id}`, body: `Body${id}` })
       }
     }
