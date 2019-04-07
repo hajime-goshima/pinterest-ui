@@ -9,25 +9,35 @@
       </h2>
       <div class="arrow"></div>
     </div>
-    <nuxt-link
+    <div
       v-for="item in items"
       :key="item.id"
       class="item-list"
       :to="`/${item.id}`"
+      @click="showDetail(item)"
     >
       <div class="item">
         <h3>{{ item.title }}</h3>
         <p>{{ item.body }}</p>
       </div>
-    </nuxt-link>
+    </div>
     <button class="readmore" @click="readMore">もっと読み込む</button>
+    <div v-if="isShowDetail" class="detail-page-wrapper">
+      <Item :item="detailItem" />
+    </div>
   </section>
 </template>
 
 <script>
+import Item from '@/components/Item.vue'
 export default {
+  components: {
+    Item
+  },
   data() {
     return {
+      detailItem: null,
+      isShowDetail: false,
       items: [
         { id: 1, title: 'Title1', body: 'Body1' },
         { id: 2, title: 'Title2', body: 'Body2' },
@@ -42,6 +52,19 @@ export default {
         const id = length + i
         this.items.push({ id: id, title: `Title${id}`, body: `Body${id}` })
       }
+    },
+    async showDetail(item) {
+      // 初期化
+      this.detailItem = null
+
+      // データの取得
+      // axiosやgraphql query等
+      const self = this
+      await setTimeout(function() {
+        self.detailItem = item
+        self.isShowDetail = true
+        window.history.pushState('detail-page', `/${item.id}`, `/${item.id}`)
+      }, 1000)
     }
   }
 }
@@ -97,6 +120,8 @@ export default {
 .item-list .item {
   border: 1px solid #ddd;
   padding: 50px;
+  margin-bottom: 15px;
+  cursor: pointer;
 }
 .item-list .item h3 {
   font-size: 30px;
@@ -111,5 +136,15 @@ export default {
   font-size: 18px;
   background: orange;
   margin: 15px auto;
+}
+
+.detail-page-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  max-height: 100vh;
+  background: rgba(50, 50, 50, 0.5);
 }
 </style>

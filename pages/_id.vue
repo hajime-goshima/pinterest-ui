@@ -1,17 +1,15 @@
 <template>
   <section class="container">
-    <button class="back-to" @click="backTo">←</button>
-    <div class="item-detail">
-      <h1>{{ item.id }}: {{ item.title }}</h1>
-      <p>{{ item.body }}</p>
-    </div>
-    >
-    <button class="back-to" @click="backTo">←</button>
+    <Item :item="item" />
   </section>
 </template>
 
 <script>
+import Item from '@/components/Item.vue'
 export default {
+  components: {
+    Item
+  },
   data() {
     return {
       item: {
